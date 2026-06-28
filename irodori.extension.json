@@ -34,7 +34,249 @@
         "module": "pinecone.driver",
         "features": [
           "metadata"
-        ]
+        ],
+        "connection": {
+          "schemaVersion": 1,
+          "inferEnvironmentFrom": [
+            "name",
+            "id",
+            "host",
+            "database",
+            "url"
+          ],
+          "compatibility": {
+            "addsRequiredProfileFields": false,
+            "acceptsExistingProfiles": true
+          },
+          "defaults": {
+            "engine": "pinecone",
+            "wire": "pinecone",
+            "port": 0,
+            "readOnly": false
+          },
+          "endpoint": {
+            "modes": [
+              "cloudResource",
+              "customEndpoint"
+            ],
+            "defaultPort": 0,
+            "fields": [
+              {
+                "id": "environment",
+                "label": "Pinecone environment or region",
+                "type": "string",
+                "option": "environment"
+              },
+              {
+                "id": "indexHost",
+                "label": "Index host",
+                "type": "uri",
+                "profileField": "host"
+              }
+            ]
+          },
+          "profileFields": [
+            {
+              "id": "id",
+              "label": "Connection ID",
+              "type": "string",
+              "profileField": "id",
+              "required": true
+            },
+            {
+              "id": "url",
+              "label": "Connection URL or DSN",
+              "type": "uri",
+              "profileField": "url"
+            },
+            {
+              "id": "user",
+              "label": "User",
+              "type": "string",
+              "profileField": "user"
+            },
+            {
+              "id": "environment",
+              "label": "Pinecone environment or region",
+              "type": "string",
+              "option": "environment"
+            },
+            {
+              "id": "indexHost",
+              "label": "Index host",
+              "type": "uri",
+              "profileField": "host"
+            },
+            {
+              "id": "readOnly",
+              "label": "Read-only connection",
+              "type": "boolean",
+              "profileField": "readOnly",
+              "default": false
+            },
+            {
+              "id": "options",
+              "label": "Driver options",
+              "type": "map",
+              "profileField": "options"
+            }
+          ],
+          "authMethods": [
+            {
+              "id": "none",
+              "label": "No authentication",
+              "kind": "none",
+              "secretPurposes": [],
+              "fields": []
+            },
+            {
+              "id": "connectionString",
+              "label": "Connection string / DSN",
+              "kind": "connectionString",
+              "secretPurposes": [],
+              "fields": [
+                {
+                  "id": "url",
+                  "label": "Connection URL or DSN",
+                  "type": "uri",
+                  "profileField": "url",
+                  "required": true
+                }
+              ]
+            },
+            {
+              "id": "apiKey",
+              "label": "API key",
+              "kind": "apiKey",
+              "secretPurposes": [
+                "token"
+              ],
+              "fields": [
+                {
+                  "id": "apiKey",
+                  "label": "API key",
+                  "type": "secret",
+                  "secretPurpose": "token"
+                }
+              ]
+            },
+            {
+              "id": "bearerToken",
+              "label": "Bearer token",
+              "kind": "token",
+              "secretPurposes": [
+                "token"
+              ],
+              "fields": [
+                {
+                  "id": "token",
+                  "label": "Token",
+                  "type": "secret",
+                  "secretPurpose": "token"
+                }
+              ]
+            },
+            {
+              "id": "clientCertificate",
+              "label": "Client certificate / mTLS",
+              "kind": "certificate",
+              "secretPurposes": [
+                "privateKey",
+                "privateKeyPassphrase"
+              ],
+              "fields": [
+                {
+                  "id": "clientCertificate",
+                  "label": "Client certificate",
+                  "type": "pem"
+                },
+                {
+                  "id": "clientPrivateKey",
+                  "label": "Client private key",
+                  "type": "pem",
+                  "secretPurpose": "privateKey"
+                },
+                {
+                  "id": "clientPrivateKeyPassphrase",
+                  "label": "Private key passphrase",
+                  "type": "secret",
+                  "secretPurpose": "privateKeyPassphrase"
+                }
+              ]
+            },
+            {
+              "id": "customDriverOptions",
+              "label": "Custom driver options",
+              "kind": "custom",
+              "secretPurposes": [
+                "password",
+                "token",
+                "privateKey",
+                "privateKeyPassphrase"
+              ],
+              "fields": [
+                {
+                  "id": "options",
+                  "label": "Driver options",
+                  "type": "map",
+                  "profileField": "options"
+                }
+              ]
+            }
+          ],
+          "secretPurposes": [
+            "token",
+            "privateKey",
+            "privateKeyPassphrase",
+            "password"
+          ],
+          "tls": {
+            "supported": true,
+            "requiredByDefault": false,
+            "modes": [
+              "disable",
+              "prefer",
+              "require",
+              "verifyCa",
+              "verifyFull",
+              "clientCertificate"
+            ],
+            "fields": [
+              {
+                "id": "caCertificate",
+                "label": "CA certificate",
+                "type": "pem"
+              },
+              {
+                "id": "clientCertificate",
+                "label": "Client certificate",
+                "type": "pem"
+              },
+              {
+                "id": "clientPrivateKey",
+                "label": "Client private key",
+                "type": "pem",
+                "secretPurpose": "privateKey"
+              }
+            ]
+          },
+          "transports": [
+            "customEndpoint",
+            "direct",
+            "sshTunnel",
+            "socks5Proxy",
+            "httpConnectProxy",
+            "proxyChain"
+          ],
+          "optionNamespaces": [
+            "profile.options",
+            "driver",
+            "tls",
+            "network",
+            "pinecone"
+          ],
+          "customDriverOptions": true
+        }
       }
     ]
   },
