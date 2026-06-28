@@ -262,6 +262,141 @@
         "pinecone"
       ],
       "customDriverOptions": true
+    },
+    "experience": {
+      "schemaVersion": 1,
+      "domains": [
+        "vector"
+      ],
+      "inspiredBy": [
+        "Pinecone indexes",
+        "Pinecone namespaces",
+        "Pinecone metadata filters"
+      ],
+      "resultViews": [
+        "vectorNeighbors",
+        "table",
+        "json"
+      ],
+      "objectTypes": [
+        "collections",
+        "indexes",
+        "vectors",
+        "payloadFields",
+        "partitions",
+        "namespaces"
+      ],
+      "workflows": [
+        {
+          "id": "vector-similarity-search",
+          "label": "Similarity search",
+          "description": "Search nearest neighbors from a pasted vector or embedding variable.",
+          "resultView": "vectorNeighbors",
+          "templateIds": [
+            "vector-similarity"
+          ]
+        },
+        {
+          "id": "vector-filtered-search",
+          "label": "Filtered ANN search",
+          "description": "Combine vector similarity with metadata or scalar filters.",
+          "resultView": "vectorNeighbors",
+          "templateIds": [
+            "vector-filtered"
+          ]
+        },
+        {
+          "id": "vector-health",
+          "label": "Collection or index health",
+          "description": "Inspect vector count, dimensionality, metric, shard, and index status.",
+          "resultView": "table",
+          "templateIds": [
+            "vector-health"
+          ]
+        }
+      ],
+      "queryTemplates": [
+        {
+          "id": "vector-similarity",
+          "label": "Pinecone query",
+          "language": "json",
+          "description": "Search topK nearest records in a namespace.",
+          "insertText": "{\n  \"namespace\": \"$namespace\",\n  \"vector\": $vector,\n  \"topK\": 10,\n  \"includeMetadata\": true\n}",
+          "parameters": [
+            {
+              "id": "namespace",
+              "label": "Namespace",
+              "type": "string",
+              "default": "default"
+            },
+            {
+              "id": "vector",
+              "label": "Query vector",
+              "type": "json"
+            }
+          ],
+          "resultView": "vectorNeighbors"
+        },
+        {
+          "id": "vector-filtered",
+          "label": "Pinecone filtered query",
+          "language": "json",
+          "description": "Search vectors with a metadata filter.",
+          "insertText": "{\n  \"namespace\": \"$namespace\",\n  \"vector\": $vector,\n  \"topK\": 10,\n  \"includeMetadata\": true,\n  \"filter\": {\n    \"$field\": { \"$eq\": \"$value\" }\n  }\n}",
+          "parameters": [
+            {
+              "id": "namespace",
+              "label": "Namespace",
+              "type": "string",
+              "default": "default"
+            },
+            {
+              "id": "vector",
+              "label": "Query vector",
+              "type": "json"
+            },
+            {
+              "id": "field",
+              "label": "Metadata field",
+              "type": "string"
+            },
+            {
+              "id": "value",
+              "label": "Metadata value",
+              "type": "string"
+            }
+          ],
+          "resultView": "vectorNeighbors"
+        },
+        {
+          "id": "vector-health",
+          "label": "Pinecone index stats",
+          "language": "text",
+          "description": "Inspect namespaces, dimensions, and vector counts.",
+          "insertText": "describe_index_stats(namespace=$namespace)",
+          "parameters": [
+            {
+              "id": "namespace",
+              "label": "Namespace",
+              "type": "string",
+              "default": "default"
+            }
+          ],
+          "resultView": "table"
+        }
+      ],
+      "inspectorHints": [
+        {
+          "id": "vector-dimension",
+          "label": "Dimension badge",
+          "description": "Surface vector dimension and distance metric beside each collection or index."
+        },
+        {
+          "id": "vector-payload",
+          "label": "Payload fields",
+          "description": "Show filterable metadata fields before composing a filtered search."
+        }
+      ]
     }
   },
   "runtime": {
