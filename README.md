@@ -34,6 +34,24 @@ The Rust code keeps native ABI exports in `src/lib.rs`, shared buffer/JSON helpe
 | `clientCertificate` | Client certificate / mTLS | `privateKey`, `privateKeyPassphrase` |
 | `customDriverOptions` | Custom driver options | `password`, `token`, `privateKey`, `privateKeyPassphrase` |
 
+## Experience Metadata
+
+- Domains: `vector`
+- Result views: `vectorNeighbors`, `table`, `json`
+- Inspired by: `Pinecone indexes`, `Pinecone namespaces`, `Pinecone metadata filters`
+
+| Workflow | Result view | Templates |
+|---|---|---|
+| Similarity search | vectorNeighbors | vector-similarity |
+| Filtered ANN search | vectorNeighbors | vector-filtered |
+| Collection or index health | table | vector-health |
+
+| Template | Label | Language | Result view |
+|---|---|---|---|
+| `vector-similarity` | Pinecone query | `json` | `vectorNeighbors` |
+| `vector-filtered` | Pinecone filtered query | `json` | `vectorNeighbors` |
+| `vector-health` | Pinecone index stats | `text` | `table` |
+
 ## ABI Calls
 
 The scaffold handles these JSON requests today:
